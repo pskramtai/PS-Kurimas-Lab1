@@ -46,13 +46,15 @@ public class StudentsCourses {
     @Transactional
     public void addCourse(){
         this.courseToAdd = coursesDAO.findOne(courseToAddId);
-        student.getCourses().add(courseToAdd);
-        studentsDAO.persist(student);
+        if(!student.getCourses().contains(courseToAdd)){
+            student.getCourses().add(courseToAdd);
+        }
+        studentsDAO.update(student);
     }
 
     @Transactional
     public void removeCourse(){
         student.getCourses().remove(coursesDAO.findOne(courseToRemoveId));
-        studentsDAO.persist(student);
+        studentsDAO.update(student);
     }
 }
